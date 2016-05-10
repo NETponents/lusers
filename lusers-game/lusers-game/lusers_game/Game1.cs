@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
-namespace Lusers
+namespace lusers_game
 {
     /// <summary>
     /// This is the main type for your game.
@@ -11,14 +12,35 @@ namespace Lusers
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
         SpriteFont fontFPSCounter;
+        SpriteFont fontRoomName;
+
+        Room currentRoom;
+
+        Vector2 drawOrigin
+        {
+            get
+            {
+                return screenCenter + new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+            }
+            set
+            {
+                screenCenter = value - new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
+            }
+        }
+
+        Vector2 screenCenter;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = 1050;
+            graphics.PreferredBackBufferWidth = 1680;
             graphics.ApplyChanges();
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -30,7 +52,8 @@ namespace Lusers
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            currentRoom = new Room();
+            drawOrigin = new Vector2(-100, -100);
             base.Initialize();
         }
 
@@ -43,7 +66,9 @@ namespace Lusers
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             fontFPSCounter = Content.Load<SpriteFont>("fonts/fpscounter");
+            fontRoomName = Content.Load<SpriteFont>("fonts/roomname");
             // TODO: use this.Content to load your game content here
+            currentRoom.Load(GraphicsDevice, Content);
         }
 
         /// <summary>
@@ -66,9 +91,9 @@ namespace Lusers
             {
                 Exit();
             }
-
+            currentRoom.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime);
             // TODO: Add your update logic here
-
+            followCameraBehavior(currentRoom.getPlayerCoordinates());
             base.Update(gameTime);
         }
 
@@ -80,11 +105,17 @@ namespace Lusers
         {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            // TODO: Add your drawing code here
+            currentRoom.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             float frameRate = 1 / (float)gameTime.ElapsedGameTime.TotalSeconds;
             spriteBatch.DrawString(fontFPSCounter, frameRate + " FPS", new Vector2(2, 2), Color.Yellow);
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        private void followCameraBehavior(Vector2 point)
+        {
+            screenCenter.X = MathHelper.Lerp(screenCenter.X, point.X, 0.075f);
+            screenCenter.Y = MathHelper.Lerp(screenCenter.Y, point.Y, 0.075f);
+            
         }
     }
 }
