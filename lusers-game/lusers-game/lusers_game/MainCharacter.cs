@@ -11,7 +11,7 @@ namespace lusers_game
         {
 
         }
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -53,7 +53,7 @@ namespace lusers_game
                 _hasMoved = true;
                 animDirection = WalkingDirection.Right;
             }
-            base.Update(gd, ref sb, cm, ref gt);
+            base.Update(gd, ref sb, cm, ref gt, drawOrigin);
         }
     }
 }

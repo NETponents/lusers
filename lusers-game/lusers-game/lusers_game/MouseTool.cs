@@ -14,6 +14,7 @@ namespace lusers_game
         private Texture2D texBlocked;
         private Texture2D texClear;
         public MouseToolState toolState;
+        private MouseState oldMouseState;
 
         public MouseTool()
         {
@@ -45,6 +46,7 @@ namespace lusers_game
             texBlocked = cm.Load<Texture2D>("img/tools/placerblocked");
             texClear = cm.Load<Texture2D>("img/tools/placerclear");
             toolState = MouseToolState.Selector;
+            oldMouseState = Mouse.GetState();
         }
 
         public void Sleep(ContentManager cm)
@@ -57,9 +59,21 @@ namespace lusers_game
             
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
-            
+            MouseState ms = Mouse.GetState();
+            if (ms.LeftButton == ButtonState.Pressed)
+            {
+                Vector2 rectRoot = new Vector2(ms.X, ms.Y);
+                rectRoot += drawOrigin * new Vector2(-1, -1);
+                rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
+                rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
+                //rectRoot += drawOrigin;
+                Desk d = new Desk(rectRoot);
+                d.Load(gd, cm);
+                WorldObjectHolder.objects.Add(d);
+            }
+            oldMouseState = ms;
         }
     }
 }

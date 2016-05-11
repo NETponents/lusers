@@ -117,8 +117,8 @@ namespace lusers_game
             {
                 Exit();
             }
-            currentRoom.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime);
-            gameHud.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime);
+            currentRoom.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            gameHud.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             followCameraBehavior(currentRoom.getPlayerCoordinates());
             if(Keyboard.GetState().IsKeyDown(Keys.Enter) && oldKSState.IsKeyUp(Keys.Enter))
             {
@@ -152,7 +152,7 @@ namespace lusers_game
                     mt.toolState = MouseToolState.Selector;
                 }
             }
-            mt.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime);
+            mt.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             oldKSState = Keyboard.GetState();
             base.Update(gameTime);
         }
@@ -167,6 +167,7 @@ namespace lusers_game
             spriteBatch.Begin();
 
             currentRoom.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            WorldObjectHolder.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             mt.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             gameHud.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             if(currentPopUp != null)

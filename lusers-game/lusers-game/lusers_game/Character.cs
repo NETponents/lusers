@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace lusers_game
 {
-    public class Character : IGameObject
+    public class Character : IGameObject, ICollidable
     {
         protected Texture2D _sprite;
         protected int _animFrames;
@@ -91,7 +92,7 @@ namespace lusers_game
             
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
             if(_hasMoved)
             {
@@ -108,7 +109,36 @@ namespace lusers_game
                 _animSpacer = 0;
             }
             _hasMoved = false;
-            actualPosition = Vector2.Lerp(actualPosition, Position, 0.1f);
+            Vector2 newPosition = Vector2.Lerp(actualPosition, Position, 0.1f);
+            Vector2 newXMove = new Vector2(newPosition.X, actualPosition.Y);
+            Vector2 newYMove = new Vector2(actualPosition.X, newPosition.Y);
+            bool Xhit = false;
+            bool Yhit = false;
+            foreach (IGameObject i in WorldObjectHolder.objects)
+            {
+                Rectangle r = (i as ICollidable).getBoundingBox();
+                if(r.Intersects(new Rectangle((int)newXMove.X, (int)newXMove.Y, 32, 48)))
+                {
+                    Xhit = true;
+                }
+                if (r.Intersects(new Rectangle((int)newYMove.X, (int)newYMove.Y, 32, 48)))
+                {
+                    Yhit = true;
+                }
+            }
+            if (Xhit)
+            {
+                newPosition.X = actualPosition.X;
+            }
+            if (Yhit)
+            {
+                newPosition.Y = actualPosition.Y;
+            }
+            if(Xhit || Yhit)
+            {
+                Position = newPosition;
+            }
+            actualPosition = newPosition;
         }
         public virtual int mapDirection(WalkingDirection wd)
         {
@@ -129,6 +159,11 @@ namespace lusers_game
                 return 1;
             }
             return 0;
+        }
+
+        public Rectangle getBoundingBox()
+        {
+            throw new NotImplementedException();
         }
     }
 }

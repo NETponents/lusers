@@ -73,7 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
+    <Compile Include="Desk.cs" />
+    <Compile Include="Furnature.cs" />
     <Compile Include="Hud.cs" />
+    <Compile Include="iCollidable.cs" />
     <Compile Include="iGameobject.cs" />
     <Compile Include="MainCharacter.cs" />
     <Compile Include="Map.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Room.cs" />
     <Compile Include="TaskList.cs" />
     <Compile Include="WalkingDirection.cs" />
+    <Compile Include="WorldObjectHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

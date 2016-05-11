@@ -49,10 +49,10 @@ namespace lusers_game
             //throw new NotImplementedException();
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
             //throw new NotImplementedException();
-            _playerCharacter.Update(gd, ref sb, cm, ref gt);
+            _playerCharacter.Update(gd, ref sb, cm, ref gt, drawOrigin);
         }
 
         public string getRoomName()
