@@ -60,6 +60,16 @@ namespace lusers_game
             _animDirection = WalkingDirection.Right;
         }
 
+        public Character(string spritePath, int animFrames, string characterName, Vector2 startPosition, WalkingDirection startDirection)
+        {
+            Name = characterName;
+            _animFrames = animFrames;
+            _spritePath = spritePath;
+            Position = startPosition;
+            animStep = 0;
+            _animDirection = startDirection;
+        }
+
         public void Awake(ContentManager cm)
         {
             

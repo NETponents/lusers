@@ -91,6 +91,11 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: Anyways, you have been hired on as the director of IT.");
             MessageService.popUpEnqueue("CEO: I'm also going to need you to help us build our office.");
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
+            CharacterList.npcs.Add(new Characters.CEO(new Vector2(300, 200)));
+            foreach(Character i in CharacterList.npcs)
+            {
+                i.Load(GraphicsDevice, Content);
+            }
             TaskList.tasks.Add(new Tasks.T1());
             gameHud = new Hud();
             gameHud.Load(GraphicsDevice, Content);
@@ -162,6 +167,10 @@ namespace lusers_game
                 }
             }
             oldKSState = Keyboard.GetState();
+            foreach (NonPlayerCharacter i in CharacterList.npcs)
+            {
+                i.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            }
             base.Update(gameTime);
         }
 
@@ -175,6 +184,10 @@ namespace lusers_game
             spriteBatch.Begin();
 
             currentRoom.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            foreach (NonPlayerCharacter i in CharacterList.npcs)
+            {
+                i.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            }
             WorldObjectHolder.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             mt.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             gameHud.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
@@ -190,6 +203,7 @@ namespace lusers_game
             spriteBatch.End();
             base.Draw(gameTime);
         }
+
         private void followCameraBehavior(Vector2 point)
         {
             screenCenter.X = MathHelper.Lerp(screenCenter.X, point.X, 0.075f);

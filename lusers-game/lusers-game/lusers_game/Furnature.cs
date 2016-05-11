@@ -59,5 +59,9 @@ namespace lusers_game
         {
             return new Rectangle((int)drawRoot.X, (int)drawRoot.Y, (int)size.X * 100, (int)size.Y * 100);
         }
+        public Vector2 getOrigin()
+        {
+            return drawRoot;
+        }
     }
 }
