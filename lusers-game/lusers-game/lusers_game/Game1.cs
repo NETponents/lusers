@@ -25,6 +25,8 @@ namespace lusers_game
         PopUp currentPopUp;
         KeyboardState oldKSState;
 
+        MouseTool mt;
+
         Hud gameHud;
 
         Vector2 drawOrigin
@@ -45,9 +47,9 @@ namespace lusers_game
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = 1050;
-            graphics.PreferredBackBufferWidth = 1680;
+            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
             IsMouseVisible = true;
         }
@@ -87,11 +89,12 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: After the incident at the old office, we had to relocate.");
             MessageService.popUpEnqueue("CEO: From now on, no nerf wars at work!");
             MessageService.popUpEnqueue("CEO: Anyways, you have been hired on as the director of IT.");
-            MessageService.popUpEnqueue("CEO: I'm also going to need you to help us bulid our office back up.");
+            MessageService.popUpEnqueue("CEO: I'm also going to need you to help us build our office.");
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
-            //MessageService.popUpQueue.Enqueue(new PopUp("1234567890123456789012345678901234"));
             gameHud = new Hud();
             gameHud.Load(GraphicsDevice, Content);
+            mt = new MouseTool();
+            mt.Load(GraphicsDevice, Content);
         }
 
         /// <summary>
@@ -138,6 +141,18 @@ namespace lusers_game
                     }
                 }
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.C) && oldKSState.IsKeyUp(Keys.C))
+            {
+                if (mt.toolState == MouseToolState.Selector)
+                {
+                    mt.toolState = MouseToolState.Builder;
+                }
+                else
+                {
+                    mt.toolState = MouseToolState.Selector;
+                }
+            }
+            mt.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime);
             oldKSState = Keyboard.GetState();
             base.Update(gameTime);
         }
@@ -152,10 +167,11 @@ namespace lusers_game
             spriteBatch.Begin();
 
             currentRoom.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            mt.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             gameHud.Draw(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
             if(currentPopUp != null)
             {
-                spriteBatch.Draw(texPopUpWindow, new Rectangle(10, 10, 600, 80), Color.White);
+                spriteBatch.Draw(texPopUpWindow, new Rectangle(10, 10, 1200, 80), Color.White);
                 spriteBatch.DrawString(fontPopUpContent, currentPopUp.getMessage(), new Vector2(20, 20), Color.Black);
                 spriteBatch.DrawString(fontPopUpSubText, "Press Enter...", new Vector2(20, 55), Color.DimGray);
             }

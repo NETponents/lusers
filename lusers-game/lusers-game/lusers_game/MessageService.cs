@@ -7,19 +7,20 @@ namespace lusers_game
 {
     public static class MessageService
     {
-        private const int POPUPCHARLIMIT = 34;
+        private const int POPUPCHARLIMIT = 68;
         public static Queue<PopUp> popUpQueue = new Queue<PopUp>();
 
         public static void popUpEnqueue(string message)
         {
-            if(message.Length < 34)
+            if(message.Length < POPUPCHARLIMIT)
             {
                 popUpQueue.Enqueue(new PopUp(message));
             }
             else
             {
-                string trimmedMessage = message.Substring(0, 30) + " ...";
-                popUpEnqueue("... " + message.Remove(0, 30));
+                string trimmedMessage = message.Substring(0, POPUPCHARLIMIT - 4) + " ...";
+                popUpQueue.Enqueue(new PopUp(trimmedMessage));
+                popUpEnqueue("... " + message.Remove(0, POPUPCHARLIMIT - 4));
             }
         }
     }
