@@ -5,8 +5,8 @@ using System.Text;
 
 namespace lusers_game
 {
-    public class TaskList
+    public static class TaskList
     {
-
+        public static List<Task> tasks = new List<Task>();
     }
 }

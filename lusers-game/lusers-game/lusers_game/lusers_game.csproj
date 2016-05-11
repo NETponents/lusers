@@ -89,7 +89,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="Task.cs" />
     <Compile Include="TaskList.cs" />
+    <Compile Include="Tasks.cs" />
     <Compile Include="WalkingDirection.cs" />
     <Compile Include="WorldObjectHolder.cs" />
   </ItemGroup>

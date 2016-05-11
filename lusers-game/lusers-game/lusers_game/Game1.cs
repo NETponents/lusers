@@ -91,6 +91,7 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: Anyways, you have been hired on as the director of IT.");
             MessageService.popUpEnqueue("CEO: I'm also going to need you to help us build our office.");
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
+            TaskList.tasks.Add(new Tasks.T1());
             gameHud = new Hud();
             gameHud.Load(GraphicsDevice, Content);
             mt = new MouseTool();
@@ -153,6 +154,13 @@ namespace lusers_game
                 }
             }
             mt.Update(GraphicsDevice, ref spriteBatch, Content, ref gameTime, drawOrigin);
+            foreach (Task t in TaskList.tasks)
+            {
+                if (!t.isComplete)
+                {
+                    t.checkForCompletion();
+                }
+            }
             oldKSState = Keyboard.GetState();
             base.Update(gameTime);
         }
