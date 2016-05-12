@@ -8,15 +8,36 @@ namespace lusers_game
 {
     public class Character : IGameObject, ICollidable
     {
-        protected Texture2D _sprite;
-        protected int _animFrames;
+        public float walkSpeed;
         public string Name
         {
             get;
             protected set;
         }
-        private string _spritePath;
         public Vector2 Position;
+        public Vector2 actualPosition;
+        public float characterHealth;
+        public float targetHealth;
+        protected Texture2D _sprite;
+        protected int _animFrames;
+        protected bool _hasMoved;
+        protected int _animSpacer = 0;
+        protected const int _animDirections = 4;
+        protected WalkingDirection animDirection
+        {
+            get
+            {
+                return _animDirection;
+            }
+            set
+            {
+                if (value != _animDirection)
+                {
+                    animStep = 0;
+                    _animDirection = value;
+                }
+            }
+        }
         protected int animStep
         {
             get
@@ -28,30 +49,11 @@ namespace lusers_game
                 _animStep = value % 4;
             }
         }
+        private string _spritePath;
         private int _animStep;
-        protected const int _animDirections = 4;
-        protected WalkingDirection animDirection
-        {
-            get
-            {
-                return _animDirection;
-            }
-            set
-            {
-                if(value != _animDirection)
-                {
-                    animStep = 0;
-                    _animDirection = value;
-                }
-            }
-        }
         private WalkingDirection _animDirection;
-        protected bool _hasMoved;
-        protected int _animSpacer = 0;
-        public Vector2 actualPosition;
-        public float characterHealth;
         private SpriteFont fontHealthFloat;
-        public float walkSpeed;
+        
 
         public Character(string spritePath, int animFrames, string characterName, Vector2 startPosition)
         {
@@ -62,6 +64,7 @@ namespace lusers_game
             animStep = 0;
             _animDirection = WalkingDirection.Right;
             characterHealth = 100.0f;
+            targetHealth = 100.0f;
             walkSpeed = 0;
         }
 
@@ -74,6 +77,7 @@ namespace lusers_game
             animStep = 0;
             _animDirection = startDirection;
             characterHealth = 100.0f;
+            targetHealth = 100.0f;
             walkSpeed = 0;
         }
 
@@ -170,17 +174,17 @@ namespace lusers_game
                 {
                     if (walkSpeed > c.walkSpeed)
                     {
-                        c.characterHealth -= walkSpeed - c.walkSpeed;
+                        c.targetHealth -= walkSpeed - c.walkSpeed;
                     }
                     else if (walkSpeed < c.walkSpeed)
                     {
-                        characterHealth -= c.walkSpeed - walkSpeed;
+                        targetHealth -= c.walkSpeed - walkSpeed;
                     }
                     else
                     {
                         float hitVal = Math.Abs(walkSpeed - c.walkSpeed);
-                        c.characterHealth -= hitVal;
-                        characterHealth -= hitVal;
+                        c.targetHealth -= hitVal;
+                        targetHealth -= hitVal;
                     }
                 }
             }
@@ -198,7 +202,8 @@ namespace lusers_game
             }
             walkSpeed = Vector2.Distance(actualPosition, newPosition);
             actualPosition = newPosition;
-            characterHealth = Math.Max(0, characterHealth);
+            targetHealth = Math.Max(0, targetHealth);
+            characterHealth = MathHelper.Lerp(characterHealth, targetHealth, 0.1f);
             if(characterHealth == 0)
             {
                 // Player is dead
