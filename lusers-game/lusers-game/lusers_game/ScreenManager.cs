@@ -71,7 +71,7 @@ namespace lusers_game
             {
                 screenList[currentScreen].Load(gd, cm);
             }
-            screenList[currentScreen].Update(gd, ref sb, cm, ref gt);
+            screenList[currentScreen].Update(gd, ref sb, cm, ref gt, this);
         }
 
         public void switchScreenContext(string screenName)
@@ -84,6 +84,10 @@ namespace lusers_game
         public string getCurrentScreen()
         {
             return currentScreen;
+        }
+        public void addScreen(string n, Screen s)
+        {
+            screenList.Add(n, s);
         }
     }
     public class ScreenNotFoundException : Exception

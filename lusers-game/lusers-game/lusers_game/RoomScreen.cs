@@ -137,7 +137,7 @@ namespace lusers_game
             
         }
 
-        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, ScreenManager sm)
         {
             // Update room object and all subsequent children components.
             currentRoom.Update(gd, ref sb, cm, ref gt, drawOrigin);
@@ -200,7 +200,7 @@ namespace lusers_game
             {
                 i.Update(gd, ref sb, cm, ref gt, drawOrigin);
             }
-            base.Update(gd, ref sb, cm, ref gt);
+            base.Update(gd, ref sb, cm, ref gt, sm);
         }
 
         /// <summary>

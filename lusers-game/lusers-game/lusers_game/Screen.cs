@@ -46,7 +46,7 @@ namespace lusers_game
             
         }
 
-        public virtual void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public virtual void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, ScreenManager sm)
         {
             
         }

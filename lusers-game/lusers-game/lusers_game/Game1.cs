@@ -93,11 +93,11 @@ namespace lusers_game
             // Point to content directory.
             Content.RootDirectory = "Content";
             // Initialize display parameters.
-            //graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = 800;
-            graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 1050;
-            //graphics.PreferredBackBufferWidth = 1680;
+            graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferHeight = 800;
+            //graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 1050;
+            graphics.PreferredBackBufferWidth = 1680;
             // Apply new graphics object settings.
             graphics.ApplyChanges();
             // Make the mouse visible.
@@ -113,7 +113,8 @@ namespace lusers_game
         protected override void Initialize()
         {
             ///////////////////////////////////////////////////
-            sm = new ScreenManager("room_office1", new Office1RoomScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+            sm = new ScreenManager("menu_main", new MainMenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+            sm.addScreen("room_office1", new Office1RoomScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
             ///////////////////////////////////////////////////
 
             base.Initialize();

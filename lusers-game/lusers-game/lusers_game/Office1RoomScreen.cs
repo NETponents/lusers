@@ -53,9 +53,9 @@ namespace lusers_game
 
         }
 
-        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt)
+        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, ScreenManager sm)
         {
-            base.Update(gd, ref sb, cm, ref gt);
+            base.Update(gd, ref sb, cm, ref gt, sm);
         }
     }
 }
