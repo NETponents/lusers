@@ -54,7 +54,6 @@ namespace lusers_game
         private WalkingDirection _animDirection;
         private SpriteFont fontHealthFloat;
         
-
         public Character(string spritePath, int animFrames, string characterName, Vector2 startPosition)
         {
             Name = characterName;
@@ -98,8 +97,9 @@ namespace lusers_game
             sb.Draw(_sprite, destinationRectangle, sourceRectangle, Color.White);
             if (characterHealth != 100.0f || GetType() == typeof(MainCharacter))
             {
-                sb.DrawString(fontHealthFloat, (int)characterHealth + "%", actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
+                sb.DrawString(fontHealthFloat, (int)characterHealth + "%", actualPosition - new Vector2(0, 40) + drawOrigin, Color.Yellow);
             }
+            sb.DrawString(fontHealthFloat, Name, actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
         }
 
         public void Load(GraphicsDevice gd, ContentManager cm)
