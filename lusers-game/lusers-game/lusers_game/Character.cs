@@ -94,7 +94,7 @@ namespace lusers_game
             sb.Draw(_sprite, destinationRectangle, sourceRectangle, Color.White);
             if (characterHealth != 100.0f || GetType() == typeof(MainCharacter))
             {
-                sb.DrawString(fontHealthFloat, characterHealth + "%", actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
+                sb.DrawString(fontHealthFloat, (int)characterHealth + "%", actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
             }
         }
 
@@ -150,6 +150,10 @@ namespace lusers_game
             }
             foreach (Character c in CharacterList.npcs)
             {
+                if(c.Equals(this))
+                {
+                    continue;
+                }
                 bool npcHit = false;
                 Rectangle r = (c as ICollidable).getBoundingBox();
                 if (r.Intersects(new Rectangle((int)newXMove.X, (int)newXMove.Y, 32, 48)))
@@ -162,13 +166,13 @@ namespace lusers_game
                     Yhit = true;
                     npcHit = true;
                 }
-                if(npcHit)
+                if (npcHit)
                 {
-                    if(walkSpeed > c.walkSpeed)
+                    if (walkSpeed > c.walkSpeed)
                     {
                         c.characterHealth -= walkSpeed - c.walkSpeed;
                     }
-                    else if(walkSpeed < c.walkSpeed)
+                    else if (walkSpeed < c.walkSpeed)
                     {
                         characterHealth -= c.walkSpeed - walkSpeed;
                     }
@@ -194,6 +198,11 @@ namespace lusers_game
             }
             walkSpeed = Vector2.Distance(actualPosition, newPosition);
             actualPosition = newPosition;
+            characterHealth = Math.Max(0, characterHealth);
+            if(characterHealth == 0)
+            {
+                // Player is dead
+            }
         }
         public virtual int mapDirection(WalkingDirection wd)
         {

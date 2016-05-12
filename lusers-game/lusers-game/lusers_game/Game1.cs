@@ -93,7 +93,7 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: Anyways, you have been hired on as the director of IT.");
             MessageService.popUpEnqueue("CEO: I'm also going to need you to help us build our office.");
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
-            CharacterList.npcs.Add(new Characters.CEO(new Vector2(300, 200)));
+            CharacterList.npcs.Add(new Characters.CEO(new Vector2(400, 200)));
             foreach(Character i in CharacterList.npcs)
             {
                 i.Load(GraphicsDevice, Content);
