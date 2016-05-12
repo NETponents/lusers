@@ -47,9 +47,11 @@ namespace lusers_game
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = 800;
-            graphics.PreferredBackBufferWidth = 1280;
+            graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferHeight = 800;
+            //graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 1050;
+            graphics.PreferredBackBufferWidth = 1680;
             graphics.ApplyChanges();
             IsMouseVisible = true;
         }

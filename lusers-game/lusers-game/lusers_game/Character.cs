@@ -49,6 +49,9 @@ namespace lusers_game
         protected bool _hasMoved;
         protected int _animSpacer = 0;
         public Vector2 actualPosition;
+        public float characterHealth;
+        private SpriteFont fontHealthFloat;
+        public float walkSpeed;
 
         public Character(string spritePath, int animFrames, string characterName, Vector2 startPosition)
         {
@@ -58,6 +61,8 @@ namespace lusers_game
             Position = startPosition;
             animStep = 0;
             _animDirection = WalkingDirection.Right;
+            characterHealth = 100.0f;
+            walkSpeed = 0;
         }
 
         public Character(string spritePath, int animFrames, string characterName, Vector2 startPosition, WalkingDirection startDirection)
@@ -68,6 +73,8 @@ namespace lusers_game
             Position = startPosition;
             animStep = 0;
             _animDirection = startDirection;
+            characterHealth = 100.0f;
+            walkSpeed = 0;
         }
 
         public void Awake(ContentManager cm)
@@ -85,11 +92,16 @@ namespace lusers_game
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)(drawOrigin.X + actualPosition.X), (int)(drawOrigin.Y + actualPosition.Y), 32, 48);
             sb.Draw(_sprite, destinationRectangle, sourceRectangle, Color.White);
+            if (characterHealth != 100.0f || GetType() == typeof(MainCharacter))
+            {
+                sb.DrawString(fontHealthFloat, characterHealth + "%", actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
+            }
         }
 
         public void Load(GraphicsDevice gd, ContentManager cm)
         {
             _sprite = cm.Load<Texture2D>(_spritePath);
+            fontHealthFloat = cm.Load<SpriteFont>("fonts/healthfloat");
         }
 
         public void Sleep(ContentManager cm)
@@ -136,6 +148,38 @@ namespace lusers_game
                     Yhit = true;
                 }
             }
+            foreach (Character c in CharacterList.npcs)
+            {
+                bool npcHit = false;
+                Rectangle r = (c as ICollidable).getBoundingBox();
+                if (r.Intersects(new Rectangle((int)newXMove.X, (int)newXMove.Y, 32, 48)))
+                {
+                    Xhit = true;
+                    npcHit = true;
+                }
+                if (r.Intersects(new Rectangle((int)newYMove.X, (int)newYMove.Y, 32, 48)))
+                {
+                    Yhit = true;
+                    npcHit = true;
+                }
+                if(npcHit)
+                {
+                    if(walkSpeed > c.walkSpeed)
+                    {
+                        c.characterHealth -= walkSpeed - c.walkSpeed;
+                    }
+                    else if(walkSpeed < c.walkSpeed)
+                    {
+                        characterHealth -= c.walkSpeed - walkSpeed;
+                    }
+                    else
+                    {
+                        float hitVal = Math.Abs(walkSpeed - c.walkSpeed);
+                        c.characterHealth -= hitVal;
+                        characterHealth -= hitVal;
+                    }
+                }
+            }
             if (Xhit)
             {
                 newPosition.X = actualPosition.X;
@@ -148,6 +192,7 @@ namespace lusers_game
             {
                 Position = newPosition;
             }
+            walkSpeed = Vector2.Distance(actualPosition, newPosition);
             actualPosition = newPosition;
         }
         public virtual int mapDirection(WalkingDirection wd)
@@ -173,7 +218,7 @@ namespace lusers_game
 
         public Rectangle getBoundingBox()
         {
-            throw new NotImplementedException();
+            return new Rectangle((int)actualPosition.X, (int)actualPosition.Y, 32, 48);
         }
     }
 }
