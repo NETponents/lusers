@@ -10,9 +10,11 @@ namespace lusers_game
 {
     public class Desk : Furnature
     {
+        public string claimedBy;
+
         public Desk(Vector2 origin) : base(origin, "img/objects/desk", "Desk", new Vector2(1, 2))
         {
-
+            
         }
     }
 }

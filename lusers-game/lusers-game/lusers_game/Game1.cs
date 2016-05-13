@@ -18,66 +18,6 @@ namespace lusers_game
         /// Handles 2D drawing to graphics device.
         /// </summary>
         SpriteBatch spriteBatch;
-        ///// <summary>
-        ///// Font for FPS counter.
-        ///// </summary>
-        //SpriteFont fontFPSCounter;
-        ///// <summary>
-        ///// Font for room name. [unused]
-        ///// </summary>
-        //SpriteFont fontRoomName;
-        ///// <summary>
-        ///// Font for pop up messages.
-        ///// </summary>
-        //SpriteFont fontPopUpContent;
-        ///// <summary>
-        ///// Font for sub-text on pop up messages.
-        ///// </summary>
-        //SpriteFont fontPopUpSubText;
-        ///// <summary>
-        ///// Background texture object for pop up windows.
-        ///// </summary>
-        //Texture2D texPopUpWindow;
-        ///// <summary>
-        ///// Pointer to room object that player is currently playing in.
-        ///// </summary>
-        //Room currentRoom;
-        ///// <summary>
-        ///// Pointer to active pop up message object.
-        ///// </summary>
-        //PopUp currentPopUp;
-        ///// <summary>
-        ///// Old keyboard state from last update cycle.
-        ///// Used for bounce protection.
-        ///// </summary>
-        //KeyboardState oldKSState;
-        ///// <summary>
-        ///// Current tool in use.
-        ///// </summary>
-        //MouseTool mt;
-        ///// <summary>
-        ///// Current HUD object to display. [unused]
-        ///// </summary>
-        //Hud gameHud;
-        ///// <summary>
-        ///// Relative origin of objects to draw from.
-        ///// Used for virtual viewport.
-        ///// </summary>
-        //Vector2 drawOrigin
-        //{
-        //    get
-        //    {
-        //        return screenCenter + new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
-        //    }
-        //    set
-        //    {
-        //        screenCenter = value - new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
-        //    }
-        //}
-        ///// <summary>
-        ///// Location of center screen relative to the world origin.
-        ///// </summary>
-        //Vector2 screenCenter;
 
         ///////////////////////////////////////////////////
         ScreenManager sm;
@@ -93,11 +33,11 @@ namespace lusers_game
             // Point to content directory.
             Content.RootDirectory = "Content";
             // Initialize display parameters.
-            graphics.IsFullScreen = true;
-            //graphics.PreferredBackBufferHeight = 800;
-            //graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 1050;
-            graphics.PreferredBackBufferWidth = 1680;
+            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 1050;
+            //graphics.PreferredBackBufferWidth = 1680;
             // Apply new graphics object settings.
             graphics.ApplyChanges();
             // Make the mouse visible.

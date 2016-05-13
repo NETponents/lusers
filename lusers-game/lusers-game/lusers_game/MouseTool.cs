@@ -77,8 +77,8 @@ namespace lusers_game
             {
                 Vector2 rectRoot = new Vector2(ms.X, ms.Y);
                 rectRoot += drawOrigin * new Vector2(-1, -1);
-                rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
-                rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
+                //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
+                //rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
                 List<IGameObject> itemsToRemove = new List<IGameObject>();
                 foreach(IGameObject g in WorldObjectHolder.objects)
                 {

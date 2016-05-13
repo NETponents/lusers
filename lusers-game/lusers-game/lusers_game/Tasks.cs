@@ -37,19 +37,6 @@ namespace lusers_game
                 MessageService.popUpEnqueue("CEO: Fine ... That will have to do.");
                 MessageService.popUpEnqueue("CEO: Now I need a computer so I can browse Reddit.");
                 MessageService.popUpEnqueue("CEO: I mean ... uh ... get on it!");
-                foreach(NonPlayerCharacter i in CharacterList.npcs)
-                {
-                    if (i.GetType() == typeof(Characters.CEO))
-                    {
-                        foreach (IGameObject j in WorldObjectHolder.objects)
-                        {
-                            if (j.GetType() == typeof(Desk))
-                            {
-                                i.setWayPoint((j as Furnature).getOrigin());
-                            }
-                        }
-                    }
-                }
             }
         }
     }

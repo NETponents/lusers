@@ -80,12 +80,12 @@ namespace lusers_game
             walkSpeed = 0;
         }
 
-        public void Awake(ContentManager cm)
+        public virtual void Awake(ContentManager cm)
         {
             
         }
 
-        public void Draw(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public virtual void Draw(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
 
             int width = _sprite.Width / _animFrames;
@@ -102,23 +102,23 @@ namespace lusers_game
             sb.DrawString(fontHealthFloat, Name, actualPosition - new Vector2(0, 20) + drawOrigin, Color.Yellow);
         }
 
-        public void Load(GraphicsDevice gd, ContentManager cm)
+        public virtual void Load(GraphicsDevice gd, ContentManager cm)
         {
             _sprite = cm.Load<Texture2D>(_spritePath);
             fontHealthFloat = cm.Load<SpriteFont>("fonts/healthfloat");
         }
 
-        public void Sleep(ContentManager cm)
+        public virtual void Sleep(ContentManager cm)
         {
             
         }
 
-        public void Unload(GraphicsDevice gd, ContentManager cm)
+        public virtual void Unload(GraphicsDevice gd, ContentManager cm)
         {
             
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public virtual void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
             if(_hasMoved)
             {
