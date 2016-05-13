@@ -15,10 +15,10 @@ namespace lusers_game
 
             }
 
-            public override void checkForCompletion()
+            public override void checkForCompletion(RoomScreen rs)
             {
                 bool isCompleted = false;
-                foreach(IGameObject i in WorldObjectHolder.objects)
+                foreach(IGameObject i in rs.gameObjects)
                 {
                     if (i.GetType() == typeof(Desk))
                     {
@@ -27,12 +27,12 @@ namespace lusers_game
                 }
                 if(isCompleted)
                 {
-                    onCompletion();
+                    onCompletion(rs);
                     isComplete = true;
                 }
             }
 
-            protected override void onCompletion()
+            protected override void onCompletion(RoomScreen rs)
             {
                 MessageService.popUpEnqueue("CEO: Fine ... That will have to do.");
                 MessageService.popUpEnqueue("CEO: Now I need a computer so I can browse Reddit.");

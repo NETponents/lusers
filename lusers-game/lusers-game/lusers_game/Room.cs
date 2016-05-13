@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace lusers_game
 {
-    public class Room : IGameObject
+    public class Room /*: IGameObject*/
     {
         protected string _roomName;
         protected Map _roomMap;
@@ -49,10 +49,10 @@ namespace lusers_game
             //throw new NotImplementedException();
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen rs)
         {
             //throw new NotImplementedException();
-            _playerCharacter.Update(gd, ref sb, cm, ref gt, drawOrigin);
+            _playerCharacter.Update(gd, ref sb, cm, ref gt, drawOrigin, rs);
         }
 
         public string getRoomName()

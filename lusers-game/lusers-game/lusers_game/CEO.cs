@@ -18,9 +18,9 @@ namespace lusers_game
                 
             }
 
-            public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+            public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen currentRoom)
             {
-                base.Update(gd, ref sb, cm, ref gt, drawOrigin);
+                base.Update(gd, ref sb, cm, ref gt, drawOrigin, currentRoom);
             }
 
             protected override Vector2 getNextWaypoint()

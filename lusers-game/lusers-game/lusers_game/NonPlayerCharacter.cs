@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace lusers_game
 {
@@ -23,38 +20,56 @@ namespace lusers_game
         {
             targetWaypoint = startPosition;
         }
-
+        
         protected abstract Vector2 getNextWaypoint();
 
-        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen currentRoom)
         {
             // Verify that we own claimedDesk.
             bool ownsADesk = false;
-            foreach (IGameObject j in WorldObjectHolder.objects)
+            foreach (IGameObject j in currentRoom.gameObjects)
             {
                 if (j.GetType() == typeof(Desk))
                 {
-                    if ((j as Desk).claimedBy == Name)
+                    try
                     {
-                        ownsADesk = true;
-                        break;
+                        if ((j as Furnature).claimedBy.Equals(Name))
+                        {
+                            ownsADesk = true;
+                            break;
+                        }
+                    }
+                    catch(NullReferenceException e)
+                    {
+
                     }
                 }
             }
             if (!ownsADesk)
             {
+                bool foundDesk = false;
                 // Desk was deleted or manually claimed by another NPC.
-                foreach (Furnature j in WorldObjectHolder.objects)
+                foreach (Furnature j in currentRoom.gameObjects)
                 {
                     if (j.GetType() == typeof(Desk))
                     {
-                        if (j.claimedBy == null)
+                        if (j.claimedBy.Equals(""))
                         {
-                            j.claimedBy = Name;
+                            j.setOwner(Name);
                             claimedDesk = (j as Desk);
+                            if(!j.claimedBy.Equals(Name))
+                            {
+                                throw new Exception("Race condition detected on desk claim.");
+                            }
+                            foundDesk = true;
                             break;
                         }
                     }
+                }
+                if(!foundDesk)
+                {
+                    claimedDesk = null;
+                    targetWaypoint = actualPosition;
                 }
             }
             // Check to see if we have moved.
@@ -65,7 +80,7 @@ namespace lusers_game
             }
             Position = Vector2.Lerp(newPos, Position, 0.96f);
             // Call Character.Update(...) for updates.
-            base.Update(gd, ref sb, cm, ref gt, drawOrigin);
+            base.Update(gd, ref sb, cm, ref gt, drawOrigin, currentRoom);
         }
         public void setWayPoint(Vector2 newPosition)
         {

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace lusers_game
 {
-    public class Character : IGameObject, ICollidable
+    public class Character : ICollidable
     {
         public float walkSpeed;
         public string Name
@@ -118,7 +118,7 @@ namespace lusers_game
             
         }
 
-        public virtual void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public virtual void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen currentRoom)
         {
             if(_hasMoved)
             {
@@ -140,7 +140,7 @@ namespace lusers_game
             Vector2 newYMove = new Vector2(actualPosition.X, newPosition.Y);
             bool Xhit = false;
             bool Yhit = false;
-            foreach (IGameObject i in WorldObjectHolder.objects)
+            foreach (IGameObject i in currentRoom.gameObjects)
             {
                 Rectangle r = (i as ICollidable).getBoundingBox();
                 if(r.Intersects(new Rectangle((int)newXMove.X, (int)newXMove.Y, 32, 48)))
@@ -152,7 +152,7 @@ namespace lusers_game
                     Yhit = true;
                 }
             }
-            foreach (Character c in CharacterList.npcs)
+            foreach (Character c in currentRoom.characters)
             {
                 if(c.Equals(this))
                 {

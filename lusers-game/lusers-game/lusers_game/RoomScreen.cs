@@ -64,10 +64,15 @@ namespace lusers_game
         /// </summary>
         protected Room currentRoom;
 
+        public List<Character> characters;
+
+        public List<IGameObject> gameObjects;
+
         public RoomScreen(int ScreenWidth, int ScreenHeight)
             : base(ScreenWidth, ScreenHeight)
         {
-
+            characters = new List<Character>();
+            gameObjects = new List<IGameObject>();
         }
 
         public override void Awake(ContentManager cm)
@@ -80,12 +85,15 @@ namespace lusers_game
             // Draw the current room and all subsequent children components.
             currentRoom.Draw(gd, ref sb, cm, ref gt, drawOrigin);
             // Draw NPCs.
-            foreach (NonPlayerCharacter i in CharacterList.npcs)
+            foreach (NonPlayerCharacter i in characters)
             {
                 i.Draw(gd, ref sb, cm, ref gt, drawOrigin);
             }
             // Draw world objects like furniture.
-            WorldObjectHolder.Draw(gd, ref sb, cm, ref gt, drawOrigin);
+            foreach(IGameObject i in gameObjects)
+            {
+                i.Draw(gd, ref sb, cm, ref gt, drawOrigin);
+            }
             // Draw the MouseTool object.
             mt.Draw(gd, ref sb, cm, ref gt, drawOrigin);
             // Draw the HUD.
@@ -114,7 +122,7 @@ namespace lusers_game
             // Load the room object.
             currentRoom.Load(gd, cm);
             // Load all NPC characters.
-            foreach (Character i in CharacterList.npcs)
+            foreach (Character i in characters)
             {
                 i.Load(gd, cm);
             }
@@ -140,7 +148,7 @@ namespace lusers_game
         public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, ScreenManager sm)
         {
             // Update room object and all subsequent children components.
-            currentRoom.Update(gd, ref sb, cm, ref gt, drawOrigin);
+            currentRoom.Update(gd, ref sb, cm, ref gt, drawOrigin, this);
             // Update the HUD.
             gameHud.Update(gd, ref sb, cm, ref gt, drawOrigin);
             // Aim the camera at the main character.
@@ -183,22 +191,22 @@ namespace lusers_game
                 }
             }
             // Update the MouseTool in the (possibly new) MouseToolSate.
-            mt.Update(gd, ref sb, cm, ref gt, drawOrigin);
+            mt.Update(gd, ref sb, cm, ref gt, drawOrigin, this);
             // Check current tasks for completion.
             foreach (Task t in TaskList.tasks)
             {
                 // Only check if not already complete.
                 if (!t.isComplete)
                 {
-                    t.checkForCompletion();
+                    t.checkForCompletion(this);
                 }
             }
             // Swap old keyboard state with new one.
             oldKSState = Keyboard.GetState();
             // Update all NPCs.
-            foreach (NonPlayerCharacter i in CharacterList.npcs)
+            foreach (NonPlayerCharacter i in characters)
             {
-                i.Update(gd, ref sb, cm, ref gt, drawOrigin);
+                i.Update(gd, ref sb, cm, ref gt, drawOrigin, this);
             }
             base.Update(gd, ref sb, cm, ref gt, sm);
         }

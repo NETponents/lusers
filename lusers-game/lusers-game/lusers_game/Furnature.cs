@@ -16,6 +16,9 @@ namespace lusers_game
         protected Vector2 size;
         private string texName;
         public string claimedBy;
+        //////////////////////////
+        private SpriteFont testOwnership;
+        //////////////////////////
 
         public Furnature(Vector2 origin, string spriteName, string name, Vector2 objectSize)
         {
@@ -23,6 +26,7 @@ namespace lusers_game
             texName = spriteName;
             objectName = name;
             size = objectSize;
+            claimedBy = "";
         }
 
         public void Awake(ContentManager cm)
@@ -35,11 +39,20 @@ namespace lusers_game
             Vector2 relativeRoot = drawRoot + drawOrigin;
             Vector2 scaledSize = size * new Vector2(100, 100);
             sb.Draw(sprite_o1, new Rectangle((int)relativeRoot.X, (int)relativeRoot.Y, (int)scaledSize.X, (int)scaledSize.Y), Color.White);
+            //////////////////////////
+            if (!claimedBy.Equals(""))
+            {
+                sb.DrawString(testOwnership, claimedBy + "'s " + objectName, drawRoot - new Vector2(0, 30) + drawOrigin, Color.DarkBlue);
+            }
+            //////////////////////////
         }
 
         public void Load(GraphicsDevice gd, ContentManager cm)
         {
             sprite_o1 = cm.Load<Texture2D>(texName);
+            //////////////////////////
+            testOwnership = cm.Load<SpriteFont>("fonts/healthfloat");
+            //////////////////////////
         }
 
         public void Sleep(ContentManager cm)
@@ -63,6 +76,10 @@ namespace lusers_game
         public Vector2 getOrigin()
         {
             return drawRoot;
+        }
+        public void setOwner(string owner)
+        {
+            claimedBy = owner;
         }
     }
 }

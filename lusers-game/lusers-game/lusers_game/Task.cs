@@ -14,7 +14,7 @@ namespace lusers_game
             isComplete = false;
         }
 
-        public abstract void checkForCompletion();
-        protected abstract void onCompletion();
+        public abstract void checkForCompletion(RoomScreen rs);
+        protected abstract void onCompletion(RoomScreen rs);
     }
 }

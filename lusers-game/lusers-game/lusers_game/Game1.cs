@@ -33,11 +33,11 @@ namespace lusers_game
             // Point to content directory.
             Content.RootDirectory = "Content";
             // Initialize display parameters.
-            graphics.IsFullScreen = true;
-            //graphics.PreferredBackBufferHeight = 800;
-            //graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 1050;
-            graphics.PreferredBackBufferWidth = 1680;
+            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 1050;
+            //graphics.PreferredBackBufferWidth = 1680;
             // Apply new graphics object settings.
             graphics.ApplyChanges();
             // Make the mouse visible.

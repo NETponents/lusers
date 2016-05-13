@@ -75,7 +75,6 @@
     <Compile Include="Button.cs" />
     <Compile Include="CEO.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="CharacterList.cs" />
     <Compile Include="Desk.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Furnature.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="TaskList.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="WalkingDirection.cs" />
-    <Compile Include="WorldObjectHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

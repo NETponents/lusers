@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace lusers_game
 {
-    public class MouseTool : IGameObject
+    public class MouseTool /*: IGameObject*/
     {
         private Texture2D texBlocked;
         private Texture2D texClear;
@@ -46,7 +43,7 @@ namespace lusers_game
             texBlocked = cm.Load<Texture2D>("img/tools/placerblocked");
             texClear = cm.Load<Texture2D>("img/tools/placerclear");
             toolState = MouseToolState.Selector;
-            oldMouseState = Mouse.GetState();
+            oldMouseState = new MouseState(0, 0, 0, ButtonState.Pressed, ButtonState.Pressed, ButtonState.Pressed, ButtonState.Pressed, ButtonState.Pressed);
         }
 
         public void Sleep(ContentManager cm)
@@ -59,40 +56,55 @@ namespace lusers_game
             
         }
 
-        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
+        public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen rs)
         {
             MouseState ms = Mouse.GetState();
-            if (ms.LeftButton == ButtonState.Pressed)
+            if (toolState == MouseToolState.Builder)
             {
-                Vector2 rectRoot = new Vector2(ms.X, ms.Y);
-                rectRoot += drawOrigin * new Vector2(-1, -1);
-                rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
-                rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
-                //rectRoot += drawOrigin;
-                Desk d = new Desk(rectRoot);
-                d.Load(gd, cm);
-                WorldObjectHolder.objects.Add(d);
-            }
-            else if(ms.RightButton == ButtonState.Pressed)
-            {
-                Vector2 rectRoot = new Vector2(ms.X, ms.Y);
-                rectRoot += drawOrigin * new Vector2(-1, -1);
-                //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
-                //rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
-                List<IGameObject> itemsToRemove = new List<IGameObject>();
-                foreach(IGameObject g in WorldObjectHolder.objects)
+                if (ms.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
                 {
-                    if(g.GetType() == typeof(Desk))
+                    Vector2 rectRoot = new Vector2(ms.X, ms.Y);
+                    bool clear = true;
+                    foreach(Furnature f in rs.gameObjects)
                     {
-                        if(Geometry.Vector2DIntersectsRectangle((g as Furnature).getBoundingBox(), rectRoot))
+                        if(Geometry.Vector2DIntersectsRectangle(f.getBoundingBox(), new Vector2(ms.X, ms.Y)))
                         {
-                            itemsToRemove.Add(g);
+                            clear = false;
+                            break;
                         }
                     }
+                    if (clear)
+                    {
+                        rectRoot += drawOrigin * new Vector2(-1, -1);
+                        rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
+                        rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
+                        //rectRoot += drawOrigin;
+                        Desk d = new Desk(rectRoot);
+                        d.Load(gd, cm);
+                        rs.gameObjects.Add(d);
+                    }
                 }
-                foreach (IGameObject i in itemsToRemove)
+                else if (ms.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
                 {
-                    WorldObjectHolder.objects.Remove(i);
+                    Vector2 rectRoot = new Vector2(ms.X, ms.Y);
+                    rectRoot += drawOrigin * new Vector2(-1, -1);
+                    //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
+                    //rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
+                    List<IGameObject> itemsToRemove = new List<IGameObject>();
+                    foreach (IGameObject g in rs.gameObjects)
+                    {
+                        if (g.GetType() == typeof(Desk))
+                        {
+                            if (Geometry.Vector2DIntersectsRectangle((g as Furnature).getBoundingBox(), rectRoot))
+                            {
+                                itemsToRemove.Add(g);
+                            }
+                        }
+                    }
+                    foreach (IGameObject i in itemsToRemove)
+                    {
+                        rs.gameObjects.Remove(i);
+                    }
                 }
             }
             oldMouseState = ms;

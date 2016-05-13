@@ -90,6 +90,7 @@ namespace lusers_game
             screenList.Add(n, s);
         }
     }
+    [Serializable]
     public class ScreenNotFoundException : Exception
     {
 

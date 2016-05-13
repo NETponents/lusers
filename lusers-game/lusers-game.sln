@@ -5,20 +5,36 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lusers_game", "lusers-game\lusers_game\lusers_game.csproj", "{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "lusers_gameContent", "lusers-game\lusers_gameContent\lusers_gameContent.contentproj", "{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lusers_gameContent", "lusers-game\lusers_gameContent\lusers_gameContent.contentproj", "{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lusers_game.test", "lusers_game.test\lusers_game.test.csproj", "{3B3553C0-982C-454C-BC95-8930A7A938E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Debug|x86.ActiveCfg = Debug|x86
 		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Debug|x86.Build.0 = Debug|x86
+		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Release|Any CPU.ActiveCfg = Release|x86
 		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Release|x86.ActiveCfg = Release|x86
 		{EAAAB806-D501-4DFD-8CAC-BEEEA08890B6}.Release|x86.Build.0 = Release|x86
+		{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}.Debug|x86.ActiveCfg = Debug|x86
+		{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}.Release|Any CPU.ActiveCfg = Release|x86
 		{6A506430-7BEE-4125-8B14-7A7FAEA52E7B}.Release|x86.ActiveCfg = Release|x86
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B3553C0-982C-454C-BC95-8930A7A938E3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
