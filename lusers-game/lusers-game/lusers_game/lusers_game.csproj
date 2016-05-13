@@ -103,6 +103,7 @@
     <Compile Include="TaskList.cs" />
     <Compile Include="Tasks.cs" />
     <Compile Include="WalkingDirection.cs" />
+    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

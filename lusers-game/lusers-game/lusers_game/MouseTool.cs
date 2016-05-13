@@ -12,6 +12,7 @@ namespace lusers_game
         private Texture2D texClear;
         public MouseToolState toolState;
         private MouseState oldMouseState;
+        public MouseToolFunction toolFunction;
 
         public MouseTool()
         {
@@ -61,13 +62,22 @@ namespace lusers_game
             MouseState ms = Mouse.GetState();
             if (toolState == MouseToolState.Builder)
             {
+                KeyboardState ks = Keyboard.GetState();
+                if(ks.IsKeyDown(Keys.NumPad1))
+                {
+                    toolFunction = MouseToolFunction.Wall;
+                }
+                else if (ks.IsKeyDown(Keys.NumPad2))
+                {
+                    toolFunction = MouseToolFunction.Desk;
+                }
                 if (ms.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released)
                 {
                     Vector2 rectRoot = new Vector2(ms.X, ms.Y);
                     bool clear = true;
                     foreach(Furnature f in rs.gameObjects)
                     {
-                        if(Geometry.Vector2DIntersectsRectangle(f.getBoundingBox(), new Vector2(ms.X, ms.Y)))
+                        if(Geometry.Vector2DIntersectsRectangle(f.getBoundingBox(), new Vector2(ms.X, ms.Y) + drawOrigin))
                         {
                             clear = false;
                             break;
@@ -79,16 +89,31 @@ namespace lusers_game
                         rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
                         rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
                         //rectRoot += drawOrigin;
-                        Desk d = new Desk(rectRoot);
-                        d.Load(gd, cm);
-                        rs.gameObjects.Add(d);
+                        Furnature d;
+                        if (toolFunction == MouseToolFunction.Desk)
+                        {
+                            d = new Desk(rectRoot);
+                        }
+                        else if(toolFunction == MouseToolFunction.Wall)
+                        {
+                            d = new Wall(rectRoot);
+                        }
+                        else
+                        {
+                            d = null;
+                        }
+                        if (d != null)
+                        {
+                            d.Load(gd, cm);
+                            rs.gameObjects.Add(d);
+                        }
                     }
                 }
                 else if (ms.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released)
                 {
                     Vector2 rectRoot = new Vector2(ms.X, ms.Y);
                     rectRoot += drawOrigin * new Vector2(-1, -1);
-                    //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
+                    //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;f
                     //rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
                     List<IGameObject> itemsToRemove = new List<IGameObject>();
                     foreach (IGameObject g in rs.gameObjects)
@@ -109,5 +134,10 @@ namespace lusers_game
             }
             oldMouseState = ms;
         }
+    }
+    public enum MouseToolFunction
+    {
+        Wall,
+        Desk
     }
 }
