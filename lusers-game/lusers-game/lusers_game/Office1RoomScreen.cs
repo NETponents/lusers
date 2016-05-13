@@ -38,6 +38,8 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
             // Initialize start-game NPCs.
             CharacterList.npcs.Add(new Characters.CEO(new Vector2(400, 200)));
+            CharacterList.npcs.Add(new Characters.Employee(new Vector2(800, 100), "Bob", "img/characters/guy"));
+            CharacterList.npcs.Add(new Characters.Employee(new Vector2(800, 300), "Andrew", "img/characters/guy"));
             // Enqueue first task.
             TaskList.tasks.Add(new Tasks.T1());
             base.Load(gd, cm);

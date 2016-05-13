@@ -44,13 +44,13 @@ namespace lusers_game
             if (!ownsADesk)
             {
                 // Desk was deleted or manually claimed by another NPC.
-                foreach (IGameObject j in WorldObjectHolder.objects)
+                foreach (Furnature j in WorldObjectHolder.objects)
                 {
                     if (j.GetType() == typeof(Desk))
                     {
-                        if ((j as Desk).claimedBy == null)
+                        if (j.claimedBy == null)
                         {
-                            (j as Desk).claimedBy = Name;
+                            j.claimedBy = Name;
                             claimedDesk = (j as Desk);
                             break;
                         }

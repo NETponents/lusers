@@ -15,6 +15,7 @@ namespace lusers_game
         public string objectName;
         protected Vector2 size;
         private string texName;
+        public string claimedBy;
 
         public Furnature(Vector2 origin, string spriteName, string name, Vector2 objectSize)
         {
