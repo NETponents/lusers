@@ -21,15 +21,17 @@ namespace lusers_game
 
         public void Awake(ContentManager cm)
         {
-            
+
         }
 
         public void Draw(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin)
         {
-            if(toolState == MouseToolState.Builder)
+            if (toolState == MouseToolState.Builder)
             {
                 MouseState ms = Mouse.GetState();
                 Vector2 rectRoot = new Vector2(ms.X, ms.Y);
+                // For debugging purposes
+                //sb.Draw(texBlocked, new Rectangle((int)(rectRoot.X + drawOrigin.X - 5), (int)(rectRoot.Y + drawOrigin.Y - 5), 10, 10), Color.White);
                 // I don't know why this works but it does.
                 rectRoot += drawOrigin * new Vector2(-1, -1);
                 rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
@@ -49,12 +51,12 @@ namespace lusers_game
 
         public void Sleep(ContentManager cm)
         {
-            
+
         }
 
         public void Unload(GraphicsDevice gd, ContentManager cm)
         {
-            
+
         }
 
         public void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, Vector2 drawOrigin, RoomScreen rs)
@@ -63,7 +65,7 @@ namespace lusers_game
             if (toolState == MouseToolState.Builder)
             {
                 KeyboardState ks = Keyboard.GetState();
-                if(ks.IsKeyDown(Keys.NumPad1))
+                if (ks.IsKeyDown(Keys.NumPad1))
                 {
                     toolFunction = MouseToolFunction.Wall;
                 }
@@ -75,9 +77,9 @@ namespace lusers_game
                 {
                     Vector2 rectRoot = new Vector2(ms.X, ms.Y);
                     bool clear = true;
-                    foreach(Furnature f in rs.gameObjects)
+                    foreach (Furnature f in rs.gameObjects)
                     {
-                        if(Geometry.Vector2DIntersectsRectangle(f.getBoundingBox(), new Vector2(ms.X, ms.Y) + drawOrigin))
+                        if (Geometry.Vector2DIntersectsRectangle(f.getBoundingBox(), new Vector2(ms.X, ms.Y) + drawOrigin))
                         {
                             clear = false;
                             break;
@@ -94,7 +96,7 @@ namespace lusers_game
                         {
                             d = new Desk(rectRoot);
                         }
-                        else if(toolFunction == MouseToolFunction.Wall)
+                        else if (toolFunction == MouseToolFunction.Wall)
                         {
                             d = new Wall(rectRoot);
                         }
@@ -113,17 +115,14 @@ namespace lusers_game
                 {
                     Vector2 rectRoot = new Vector2(ms.X, ms.Y);
                     rectRoot += drawOrigin * new Vector2(-1, -1);
-                    //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;f
+                    //rectRoot.X = (int)(rectRoot.X / 100.0f) * 100;
                     //rectRoot.Y = (int)(rectRoot.Y / 100.0f) * 100;
                     List<IGameObject> itemsToRemove = new List<IGameObject>();
                     foreach (IGameObject g in rs.gameObjects)
                     {
-                        if (g.GetType() == typeof(Desk))
+                        if (Geometry.Vector2DIntersectsRectangle((g as Furnature).getBoundingBox(), rectRoot))
                         {
-                            if (Geometry.Vector2DIntersectsRectangle((g as Furnature).getBoundingBox(), rectRoot))
-                            {
-                                itemsToRemove.Add(g);
-                            }
+                            itemsToRemove.Add(g);
                         }
                     }
                     foreach (IGameObject i in itemsToRemove)

@@ -37,9 +37,9 @@ namespace lusers_game
             MessageService.popUpEnqueue("CEO: I'm also going to need you to help us build our office.");
             MessageService.popUpEnqueue("CEO: Now get me a desk so I can get back to work!");
             // Initialize start-game NPCs.
-            characters.Add(new Characters.CEO(new Vector2(400, 200)));
-            characters.Add(new Characters.Employee(new Vector2(800, 100), "Bob", "img/characters/guy"));
-            characters.Add(new Characters.Employee(new Vector2(800, 300), "Andrew", "img/characters/guy"));
+            characters.Add(new Characters.CEO(new Vector2(500, 200)));
+            characters.Add(new Characters.Employee(new Vector2(700, 100), "Bob", "img/characters/guy"));
+            characters.Add(new Characters.Employee(new Vector2(900, 300), "Andrew", "img/characters/guy"));
             // Enqueue first task.
             TaskList.tasks.Add(new Tasks.T1());
             base.Load(gd, cm);
