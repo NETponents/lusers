@@ -201,6 +201,7 @@ namespace lusers_game
                     t.checkForCompletion(this);
                 }
             }
+            TaskList.Update();
             // Swap old keyboard state with new one.
             oldKSState = Keyboard.GetState();
             // Update all NPCs.
