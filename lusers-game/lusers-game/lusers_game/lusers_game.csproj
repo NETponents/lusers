@@ -89,6 +89,7 @@
     <Compile Include="MessageService.cs" />
     <Compile Include="MouseTool.cs" />
     <Compile Include="MouseToolState.cs" />
+    <Compile Include="NavigationService.cs" />
     <Compile Include="NonPlayerCharacter.cs" />
     <Compile Include="Office1RoomScreen.cs" />
     <Compile Include="PopUp.cs" />

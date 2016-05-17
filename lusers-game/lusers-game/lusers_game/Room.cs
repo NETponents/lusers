@@ -10,9 +10,9 @@ namespace lusers_game
 {
     public class Room /*: IGameObject*/
     {
-        protected string _roomName;
-        protected Map _roomMap;
-        protected MainCharacter _playerCharacter;
+        public string _roomName;
+        public Map _roomMap;
+        public MainCharacter _playerCharacter;
 
         public Room()
         {

@@ -66,7 +66,22 @@ namespace lusers_game
 
         public List<Character> characters;
 
-        public List<IGameObject> gameObjects;
+        public List<IGameObject> gameObjects
+        {
+            get
+            {
+                return _gameObjects;
+            }
+            set
+            {
+                _gameObjects = value;
+                navListOutdated = true;
+            }
+        }
+        private List<IGameObject> _gameObjects;
+
+        public bool[,] navMap;
+        public bool navListOutdated = false;
 
         public RoomScreen(int ScreenWidth, int ScreenHeight)
             : base(ScreenWidth, ScreenHeight)
@@ -133,6 +148,16 @@ namespace lusers_game
             mt = new MouseTool();
             mt.Load(gd, cm);
             base.Load(gd, cm);
+            // Load in empty navigation map.
+            navMap = new bool[currentRoom._roomMap.mapWidth, currentRoom._roomMap.mapHeight];
+            for (int x = 0; x < currentRoom._roomMap.mapWidth; x++)
+            {
+                for (int y = 0; y < currentRoom._roomMap.mapHeight; y++)
+                {
+                    navMap[x, y] = false;
+
+                }
+            }
         }
 
         public override void Sleep(ContentManager cm)
@@ -145,8 +170,32 @@ namespace lusers_game
             
         }
 
+        private void updateNavGraph()
+        {
+            for(int x = 0; x < currentRoom._roomMap.mapWidth; x++)
+            {
+                for(int y = 0; y < currentRoom._roomMap.mapHeight; y++)
+                {
+                    navMap[x, y] = false;
+
+                }
+            }
+            foreach(Furnature i in gameObjects)
+            {
+                Vector2 position = i.getOrigin();
+                position.X /= currentRoom._roomMap.mapWidth;
+                position.Y /= currentRoom._roomMap.mapHeight;
+                navMap[(int)position.X, (int)position.Y] = true;
+            }
+        }
+
         public override void Update(GraphicsDevice gd, ref SpriteBatch sb, ContentManager cm, ref GameTime gt, ScreenManager sm)
         {
+            if(navListOutdated)
+            {
+                navListOutdated = false;
+                updateNavGraph();
+            }
             // Update room object and all subsequent children components.
             currentRoom.Update(gd, ref sb, cm, ref gt, drawOrigin, this);
             // Update the HUD.
